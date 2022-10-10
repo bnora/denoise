@@ -1,15 +1,9 @@
-from __future__ import print_function, division
-
 import json
-# Ignore warnings
-import warnings
 from pathlib import Path
 
 import torch
 from torchvision import io
 from torch.utils.data import Dataset
-
-warnings.filterwarnings("ignore")
 
 
 class MyImages(Dataset):

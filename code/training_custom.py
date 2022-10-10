@@ -1,14 +1,12 @@
-import torch
-from torch.utils.data import Dataset
-from torchvision import datasets
-from torchvision.transforms import ToTensor
-import matplotlib.pyplot as plt
-from torch.utils.data import DataLoader
-from data import MyImages
 from pathlib import Path
 
+import matplotlib.pyplot as plt
+import torch
+from torch.utils.data import DataLoader
 
-training_data = MyImages(Path("//split.json"), "train")
+from data import MyImages
+
+training_data = MyImages(Path("../split.json"), "train")
 train_dataloader = DataLoader(training_data, batch_size=4, shuffle=True)
 
 # Display image
