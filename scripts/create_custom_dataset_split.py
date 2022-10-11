@@ -1,6 +1,6 @@
 import argparse
 from pathlib import Path
-import src.data
+import src.custom_data
 
 
 if __name__ == '__main__':
@@ -14,5 +14,5 @@ if __name__ == '__main__':
                         help='directory where output will be written')
     args = parser.parse_args()
 
-    my_split = src.data.get_dataset_split(args.data_dir, tuple(args.split))
-    src.data.save_split_as_json(my_split, args.out_dir)
+    my_split = src.custom_data.get_dataset_split(args.data_dir, tuple(args.split))
+    src.custom_data.save_split_as_json(my_split, args.out_dir)

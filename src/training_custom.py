@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import torch
 from torch.utils.data import DataLoader
 
-from data import MyImages
+from custom_data import MyImages
 
 training_data = MyImages(Path("../split.json"), "train")
 train_dataloader = DataLoader(training_data, batch_size=4, shuffle=True)
