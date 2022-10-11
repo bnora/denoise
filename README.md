@@ -5,4 +5,4 @@ Example images:
 ![example image](./tests/test_data/P1010214.JPG)
 
 
-image denoising
+
