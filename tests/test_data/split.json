@@ -1,0 +1,10 @@
+{
+    "train": [
+        "/media/nora/DATA/Pictures/Kepek/Italy2012/P1010214.JPG"
+    ],
+    "val": [
+        "/media/nora/DATA/Pictures/Kepek/Italy2012/P1010215.JPG"
+    ],
+    "test": [
+    ]
+}

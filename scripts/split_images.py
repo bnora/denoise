@@ -12,10 +12,10 @@ class DataSplit:
     test: list[str]
 
 
-parser = argparse.ArgumentParser(description='create data split')
+parser = argparse.ArgumentParser(description='create fashionMNIST_data split')
 parser.add_argument('--split', type=int, nargs='+', default=[80, 10, 10],
                     help='Percentage Train/validation/test')
-parser.add_argument('--data-dir', dest='data_dir', type=Path, default=Path("/media/nora/DATA/Pictures/Kepek/Italy2012"),
+parser.add_argument('--fashionMNIST_data-dir', dest='data_dir', type=Path, default=Path("/media/nora/DATA/Pictures/Kepek/Italy2012"),
                     help='directory where the images are')
 parser.add_argument('--output-dir', dest='out_dir', type=Path, default="/home/nora/Work/image_denoise/",
                     help='directory where output will be written')
