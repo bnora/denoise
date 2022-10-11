@@ -1,9 +1,10 @@
 import json
 from pathlib import Path
+from typing import Union
 
 import torch
-from torchvision import io
 from torch.utils.data import Dataset
+from torchvision import io
 
 
 class MyImages(Dataset):
@@ -21,7 +22,7 @@ class MyImages(Dataset):
     def __len__(self):
         return len(self.image_list)
 
-    def __getitem__(self, idx):
+    def __getitem__(self, idx: Union[int, torch.IntTensor]):
         if torch.is_tensor(idx):
             idx = idx.tolist()
 
