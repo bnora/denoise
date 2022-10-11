@@ -7,14 +7,14 @@ from torch.utils.data import DataLoader
 
 
 training_data = datasets.FashionMNIST(
-    root="data",
+    root="fashionMNIST_data",
     train=True,
     download=True,
     transform=ToTensor()
 )
 
 test_data = datasets.FashionMNIST(
-    root="data",
+    root="fashionMNIST_data",
     train=False,
     download=True,
     transform=ToTensor()
