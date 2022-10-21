@@ -1,37 +1,33 @@
 import torch
-from torch.utils.data import Dataset
-from torchvision import datasets
-from torchvision.transforms import ToTensor
-import matplotlib.pyplot as plt
-from torch.utils.data import DataLoader
 
 
-training_data = datasets.FashionMNIST(
-    root="fashionMNIST_data",
-    train=True,
-    download=True,
-    transform=ToTensor()
-)
+def train_loop(dataloader, model, loss_fn, optimizer):
+    size = len(dataloader.dataset)
+    for batch, (X, y) in enumerate(dataloader):
+        # Compute prediction and loss
+        pred = model(X)
+        loss = loss_fn(pred, X)  # autoencoder
 
-test_data = datasets.FashionMNIST(
-    root="fashionMNIST_data",
-    train=False,
-    download=True,
-    transform=ToTensor()
-)
+        # Backpropagation
+        optimizer.zero_grad()  # for not accumulating gradients from past iterations
+        loss.backward()  # get gradients
+        optimizer.step()
+
+        if batch % 100 == 0:
+            loss, current = loss.item(), batch * len(X)
+            print(f"loss: {loss:>7f}  [{current:>5d}/{size:>5d}]")
 
 
-train_dataloader = DataLoader(training_data, batch_size=64, shuffle=True)
-test_dataloader = DataLoader(test_data, batch_size=64, shuffle=True)
+def test_loop(dataloader, model, loss_fn):
+    size = len(dataloader.dataset)
+    num_batches = len(dataloader)
+    test_loss, correct = 0, 0
 
-# Display image and label.
-train_features, train_labels = next(iter(train_dataloader))
-print(f"Feature batch shape: {train_features.size()}")
-print(f"Labels batch shape: {train_labels.size()}")
-img = train_features[0].squeeze()
-label = train_labels[0]
-plt.imshow(img, cmap="gray")
-plt.show()
-print(f"Label: {label}")
+    with torch.no_grad():
+        for (X, y) in dataloader:
+            pred = model(X)
+            test_loss += loss_fn(pred, X).item()
 
+    test_loss /= num_batches
+    print(f"Test Error: \n Avg loss: {test_loss:>8f} \n")
 

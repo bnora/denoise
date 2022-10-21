@@ -7,7 +7,7 @@ import dataclasses
 
 import torch
 from torch.utils.data import Dataset
-from torchvision import io
+from torchvision import io, transforms
 
 
 class MyImages(Dataset):
@@ -30,6 +30,8 @@ class MyImages(Dataset):
             idx = idx.tolist()
 
         image = io.read_image(self.image_list[idx])
+        image = transforms.RandomCrop(size=(28, 28))(image)
+        image = image.float() / 255.  # image will be between [0, 1]
 
         return image
 
