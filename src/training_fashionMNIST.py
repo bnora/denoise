@@ -1,4 +1,5 @@
 import torch
+import wandb
 
 
 def train_loop(dataloader, model, loss_fn, optimizer):
@@ -12,10 +13,14 @@ def train_loop(dataloader, model, loss_fn, optimizer):
         optimizer.zero_grad()  # for not accumulating gradients from past iterations
         loss.backward()  # get gradients
         optimizer.step()
+        wandb.log({"loss": loss})
 
         if batch % 100 == 0:
             loss, current = loss.item(), batch * len(X)
             print(f"loss: {loss:>7f}  [{current:>5d}/{size:>5d}]")
+            wandb.log({"loss": loss,
+                       "current": current,
+                       })
 
 
 def test_loop(dataloader, model, loss_fn):

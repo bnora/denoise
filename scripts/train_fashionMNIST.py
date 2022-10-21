@@ -5,8 +5,13 @@ from torchvision import datasets
 from torchvision.transforms import ToTensor
 import matplotlib.pyplot as plt
 
+import wandb
+
 import src.training_fashionMNIST as trainer
 from src.model import Autoencoder
+
+
+wandb.init(project="fashionMNIST")
 
 training_data = datasets.FashionMNIST(
     root="fashionMNIST_data",
@@ -22,12 +27,18 @@ test_data = datasets.FashionMNIST(
     transform=ToTensor()
 )
 
-learning_rate = 1e-3
-batch_size = 64
-epochs = 5
+# learning_rate = 1e-3
+# batch_size = 64
+# epochs = 5
 
-train_dataloader = DataLoader(training_data, batch_size=batch_size, shuffle=True)
-test_dataloader = DataLoader(test_data, batch_size=batch_size, shuffle=True)
+wandb.config = {
+    "learning_rate": 1e-3,
+    "batch_size": 64,
+    "epochs": 5,
+}
+
+train_dataloader = DataLoader(training_data, batch_size=wandb.config["batch_size"], shuffle=True)
+test_dataloader = DataLoader(test_data, batch_size=wandb.config["batch_size"], shuffle=True)
 train_features, train_labels = next(iter(train_dataloader))
 print(f"Feature batch shape: {train_features.size()}, type {train_features.type()}")
 
@@ -50,9 +61,9 @@ model = Autoencoder(base_channel_size=16,
 # print(f"Label: {label}")
 
 loss_fn = nn.MSELoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+optimizer = torch.optim.Adam(model.parameters(), lr=wandb.config["learning_rate"])
 
-for n_epoc in range(epochs):
+for n_epoc in range(wandb.config["epochs"]):
     print(f"Epoch {n_epoc + 1}\n-------------------------------")
     trainer.train_loop(train_dataloader, model, loss_fn, optimizer)
     trainer.test_loop(test_dataloader, model, loss_fn)
