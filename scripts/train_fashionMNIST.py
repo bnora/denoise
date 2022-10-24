@@ -13,6 +13,10 @@ from src.model import Autoencoder
 
 wandb.init(project="fashionMNIST")
 
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+print(device)
+
+
 training_data = datasets.FashionMNIST(
     root="fashionMNIST_data",
     train=True,
@@ -45,6 +49,7 @@ print(f"Feature batch shape: {train_features.size()}, type {train_features.type(
 model = Autoencoder(base_channel_size=16,
                     latent_dim=16,
                     num_input_channels=1)
+model.to(device)
 
 # pred = model(train_features)
 # print(f"Output batch shape: {pred.size()}")
